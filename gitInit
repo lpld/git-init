@@ -1,0 +1,23 @@
+#!/bin/sh
+
+TEMPLATES="$HOME/bin/git-init/templates"
+
+git init
+
+# print
+git config user.name
+git config user.email
+
+# init .gitignore
+for templ in "$@"
+do
+  templFile=$TEMPLATES/$templ
+
+  if [ -f $templFile ]; then
+    echo "# $templ" >> .gitignore
+    cat $templFile >> .gitignore
+    echo "" >> .gitignore
+  else 
+    echo "Cannot find template $templFile"
+  fi
+done
